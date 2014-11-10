@@ -1,14 +1,380 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>KabelSm</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang=ru>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Смарт Электро круче всех на свете!</title>
+    <meta name="keywords" content="Смарт Электро круче всех на свете!" />
+    <meta name="description" content="Смарт Электро круче всех на свете!">
+    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="favicon.ico" rel="shortcut icon" />
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body> 
+    <div id="container">     
+      <header id="top">
+        <!-- Блок шапка сайта --> 
+        <div class="top_menu">
+           <ul class="top_menu_links">
+             <li class="top_icon1"><a href="#" title="Как заказать?">Как заказать?</a></li>
+             <li class="top_icon2"><a href="#" title="Оплата">Оплата</a></li>
+             <li class="top_icon3"><a href="#" title="Доставка">Доставка</a></li>
+             <li class="top_icon4"><a href="#" title="Клиентам">Клиентам</a></li>
+             <li class="top_icon5"><a href="#" title="Отзывы и предложения">Отзывы и предложения</a></li>             
+           </ul>
+           <%= render '/layouts/main_menu' %> 
+        </div>       
+        <div class="logo">
+          <a href="/">
+            <%= image_tag 'logo.png', alt: 'Логотип Смарт Электро' %>
+          </a>
+        </div>
+        <div class="phone">
+          <span class="cod">(473)</span> <span class="number">292-42-79</span> с <span class="orange">9:00</span> до <span class="orange">17:00</span> <span class="black">ПН-ПТ</span><br />
+          <span class="cod">(473)</span> <span class="number">257-39-41</span> с <span class="orange">10:00</span> до <span class="orange">22:00</span> <span class="black">ПН-ВС</span><br />
+          <span class="cod">(473)</span> <span class="number">257-39-42</span> с <span class="orange">10:00</span> до <span class="orange">22:00</span> <span class="black">ПН-ВС</span>          
+        </div>
+        <div class="cart">
+          <div class="cart_info">В вашей корзине <br /><a href="#">7 товаров</a></div>
+          <a class="cart_button" href="#">Оформить заявку</a>
+        </div>        
+        <div class="site_name black">Интернет-магазин</div> 
+        <div class="site_slogan">Слоган сайта например: Смарт Электро круче всех на свете!</div>
+        <div class="connection"><a class="mail" href="#">vrnelectro@mail.ru</a> <a class="scype" href="#">scypevrnelectro</a> <a class="quest" href="#">задать вопрос?</a> </div>
+      </header>
+      <section id="menu_block">
+        <!-- Блок поиск --> 
+        <div class="search_block">
+           <input class="search_block_line" id="search_line" type="text" placeholder="Поиск по сайту..."  />
+           <input class="search_block_button" type="submit" id="search_button" name="search_button" value="" />
+        </div>      
+        <!-- Блок главное меню --> 
+        <nav class="main_menu">
+          <ul>   
+            <li><a href="#" title="Главная">Главная</a></li>
+            <li><a href="#" title="Каталог">Каталог</a></li>
+            <li><a href="#" title="О компании">О компании</a></li>
+            <li><a href="#" title="Вопрос-Ответ">Вопрос-Ответ</a></li>
+            <li><a href="#" title="Новости">Новости</a></li>
+            <li><a href="#" title="Cтатьи">Cтатьи</a></li>
+            <li><a href="#" title="Партнерам">Партнерам</a></li>
+            <li class="last"><a href="#" title="Контакты">Контакты</a></li>
+          </ul>
+        </nav>
+      </section>
+      <section id="script_block">
+        <!-- Блок каталог товаров --> 
+        <div class="catalog_block">
+          <div class="catalog_caption"></div>
+          <nav class="catalog_menu">
+            <ul>
+              <li><a href="#">Электрокомфорт и системы электрического обогрева</a>
+                <ul class="subs">
+                  <li><a href="#">Теплые полы</a></li>
+                  <li><a href="#">Антиобледенительные системы</a></li>
+                  <li><a href="#">Электрические конвекторы</a></li>
+                  <li class="last"><a href="#">Тепловые завесы</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Кабельно-проводниковая продукция</a>
+                <ul class="subs">
+                  <li><a href="#">Кабель телефонный</a></li>
+                  <li><a href="#">Кабель телевизионный</a></li>
+                  <li><a href="#">Кабель витая пара</a></li>
+                  <li><a href="#">Кабель с СПЭ (с изоляцией из сшитого полиэтилена)</a></li>
+                  <li><a href="#">Силовой кабель</a></li>
+                  <li><a href="#">Коаксиальный кабель</a></li>
+                  <li><a href="#">Контрольный кабель</a></li>
+                  <li><a href="#">Огнестойкий кабель</a></li>
+                  <li><a href="#">Провод СИП - самонесущий изолированный провод</a></li>
+                  <li><a href="#">Кабель КГ</a></li>
+                  <li><a href="#">Кабель силовой NYM</a></li>
+                  <li><a href="#">Кабель ВВГ</a></li>
+                  <li><a href="#">Кабель силовой АВВГ</a></li>
+                  <li><a href="#">Провод АС</a></li>
+                  <li><a href="#">Провод соединительный ПВС</a></li>
+                  <li class="last"><a href="#">Кабельная арматура</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Электроустановочные изделия</a>
+                <ul class="subs">
+                  <li><a href="#">Коробки установочные и распределительные</a></li>
+                  <li><a href="#">Электрические звонки</a></li>
+                  <li><a href="#">Удлинители, колодки для удлинителей, сетевые фильтры</a></li>
+                  <li class="last"><a href="#">Розетки, вилки и выключатели</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Низковольтное оборудование</a>
+                <ul class="subs">
+                  <li><a href="#">Шины, изоляторы, держатели шин</a></li>
+                  <li><a href="#">Электрощитовое оборудование</a></li>
+                  <li><a href="#">Автоматические выключатели</a></li>
+                  <li><a href="#">Аппаратура измерения</a></li>
+                  <li><a href="#">Устройства дифференциального тока</a></li>
+                  <li><a href="#">Электромонтажный инструмент</a></li>
+                  <li><a href="#">Изделия для монтажа электропроводки</a></li>
+                  <li class="last"><a href="#">Сопутствующие товары</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Кабеленесущие системы</a>
+                <ul class="subs">
+                  <li><a href="#">Металлические лотки</a></li>
+                  <li><a href="#">Пластиковые кабель-каналы</a></li>
+                  <li><a href="#">Жесткая пластиковая труба</a></li>
+                  <li><a href="#">Двустенная труба</a></li>
+                  <li class="last"><a href="#">Гофрированная труба</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Светотехника</a>
+                <ul class="subs">
+                  <li><a href="#">Источники света (лампы)</a></li>
+                  <li><a href="#">Светодиодное освещение</a></li>
+                  <li><a href="#">Прожекторы</a></li>
+                  <li><a href="#">Офисно-административное освещение</a></li>
+                  <li><a href="#">Переносные светильники</a></li>
+                  <li><a href="#">Улично-парковое освещение</a></li>
+                  <li class="last"><a href="#">Управление освещением</a></li>
+                </ul>
+              </li>
+              <li class="last"><a href="#">Оборудование для промышленных установок</a>
+                <ul class="subs">
+                  <li><a href="#">Посты и пульты кнопочные</a></li>
+                  <li><a href="#">Корпуса постов КП для установки кнопок управления</a></li>
+                  <li><a href="#">Светосигнальные индикаторы, кнопки управления и переключатели</a></li>
+                  <li><a href="#">Реле контроля и управления</a></li>
+                  <li><a href="#">Кулачковые переключатели</a></li>
+                  <li><a href="#">Устройства защиты двигателей</a></li>
+                  <li class="last"><a href="#">Коммутационное оборудование</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>      
+        </div>
+        <!-- Блок спецпредложение -->     
+        <div class="dop_info_block">
+           <div class="info_blocks"><a href="#"><img src="images/icon1.png" alt="Акции" />Акции</a></div>
+           <div class="info_blocks"><a href="#"><img src="images/icon2.png" alt="Хит продаж" />Хит продаж</a></div>
+           <div class="info_blocks"><a href="#"><img src="images/icon3.png" alt="Рапродажа" />Рапродажа</a></div>
+           <div class="info_blocks"><a href="#"><img src="images/icon4.png" alt="Скидки" />Скидки</a></div>
+           <div class="info_blocks"><a href="#"><img src="images/icon5.png" alt="Рекомендуем" />Рекомендуем</a></div>
+           <div class="info_blocks"><a href="#"><img src="images/icon6.png" alt="Новинки" />Новинки</a></div>   
+        </div>        
+        <!-- Блок главный слайдер --> 
+        <div class="main_script_block">
+          <div id="slides">
+            <div class="slides_container">
+              <a href="#"><div class="slcont"></div></a>
+              <a href="#"><div class="slcont2"></div></a>
+              <a href="#"><div class="slcont3"></div></a>
+              <a href="#"><div class="slcont4"></div></a>
+              <a href="#"><div class="slcont5"></div></a>
+            </div>
+            <a href="#" class="prev">
+              <%= image_tag 'prew_slide.png', width: 38, height: 67, alt: 'Предыдущий' %>
+            </a>
+            <a href="#" class="next">
+              <%= image_tag 'next_slide.png', width: 38, height: 67, alt: 'Следующий' %>
+            </a>
+          </div>
+        </div>  
 
-<%= yield %>
-
-</body>
+      </section>
+      <section id="content_block">
+        <!-- Левая колнка --> 
+        <aside class="left_col">
+          <div class="consultant">
+            <div class="online_consult">Нужна консультация <span class="green">онлайн</span>?</div> 
+            <a class="button_consult" href="#">Задать свой вопрос</a> 
+          </div>
+          <article class="left_content">
+            <h3>О компании</h3>
+              <p>Многолетний опыт работы в кабельной отрасли и желание помочь каждому клиенту, предоставив качественный сервис, помогли нам создать уникальную трейдерскую компанию «Смарт Электро».</p> 
+              <p>Мы начинали с малого, но, всего за несколько лет интенсивного развития, благодаря профессиональной команде сотрудников компании и знанию рынка изнутри, нам удалось стать лидерами в индустрии продаж кабельно-проводниковой продукции. </p>
+              <p>Сотрудники компании молоды, энергичны и креативны, что позволяет им знакомить клиентов с продукцией компании, практически, 24 часа в сутки. </p>
+              <p>Высокий профессионализм и любовь к работе сделали «Смарт Электро» партнером самых известных и крупных кабельных заводов в России.</p> 
+              <p>Сегодня мы уверенно заявляем: «Смарт Электро» предоставляет кабельно-проводниковую продукцию на любой вкус.</p> 
+              <p>Менеджеры компании помогут определиться с товаром вне зависимости от его марки, наименования, производителя или объема, а также рассчитают оптимальные условия доставки товара. </p>
+              <p>Одно из наших новых направлений в работе – оказание бесплатной консультационной помощи по подбору, подключению и эксплуатации электротехнической продукции. </p>
+              <p>Сотрудники компании молоды, энергичны и креативны, что позволяет им знакомить клиентов с продукцией компании, практически, 24 часа в сутки. </p>
+              <p>Высокий профессионализм и любовь к работе сделали «Смарт Электро» партнером самых известных и крупных кабельных заводов в России.</p> 
+              <p>Сегодня мы уверенно заявляем: «Смарт Электро» предоставляет кабельно-проводниковую продукцию на любой вкус.</p> 
+              <p>Менеджеры компании помогут определиться с товаром вне зависимости от его марки, наименования, производителя или объема, а также рассчитают оптимальные условия доставки товара. </p>
+              <p>Одно из наших новых направлений в работе – оказание бесплатной консультационной помощи по подбору, подключению и эксплуатации электротехнической продукции. </p>              
+          </article>
+        </aside>
+        <!-- Большая правая колонка для 2-х колоночной структуры  
+        <main class="big_right_col2">
+          Контент......
+        </main> -->       
+        <!-- Большая правая колонка для 3-х колоночной структуры --> 
+        <div class="big_right_col">
+          <div class="big_right_caption">Наши преимущества</div>
+          <div class="preference">          
+            <div class="pref_block"><b>Более 120 000</b> довольных клиентов со всей России с 2006 года.</div>
+            <div class="pref_block"><b>Только 100%</b> проверенная продукция.</div>
+            <div class="pref_block"><b>Доставим Ваш заказ в любую точку России.</b></div>
+            <div class="pref_block">В отличии от многих, <b>мы всегда держим своё слово.</b></div>
+          </div>
+        </div>  
+        <!-- Правая колонка --> 
+        <aside class="right_col">
+          <h3>Новости</h3>
+          <a class="full" href="#">Посмотреть все</a>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>
+          <article class="news">
+            <time class="times" datetime="2014-06-10">10<br /><span class="month">06</span></time>
+            <div class="news_content"><a href="#">График работы в выходные и праздничные дни</a><br /> Мы от всей души поздравляем вас с весенними праздниками</div>
+          </article>                                                                    
+          <div class="social_block">
+            <h3>Мы в соцсетях</h3> 
+            <div class="social">
+              <a href="#"><img src="images/soc1.png" alt="В контакте" /></a>
+              <a href="#"><img src="images/soc2.png" alt="Одноклассники" /></a>
+              <a href="#"><img src="images/soc3.png" alt="facebook" /></a>
+              <a href="#"><img src="images/soc4.png" alt="twitter" /></a>
+              <a href="#"><img src="images/soc5.png" alt="google+" /></a>
+              <a href="#"><img src="images/soc6.png" alt="mail" /></a>           
+            </div>
+          </div>                                                            
+        </aside>    
+        <!-- Центральная колонка --> 
+        <main class="main_content">
+          <h1>Добро пожаловать на сайт "СмартЭлектро"</h1>
+          <!-- Карточка товара --> 
+          <div class="item_content">
+            <h2>Кабели силовые с пластмассовой изоляцией</h2>            
+            <div class="item_img"><a href="#"><img src="images/tovar.png" width="150px"  alt="Товар" /></a></div>
+            <div class="item_count">
+              <input id="count" name="count" type="text" value="1" maxlength="4" />
+              <span class="count">м*</span><br />
+              <span class="desc"><span class="big red">*</span> - укажите количество метров</span>
+            </div>
+            <div class="item_buttons">
+              <a class="item_cart" href="#">Добавить в корзину</a>
+              <a class="item_readmore" href="#">Читать подробнее...</a>
+            </div>  
+            <div class="item_text">
+              <p>Данный тип продукции может производиться с алюминиевые токоведущими жилами различного класса гибкости...</p> 
+            </div>
+            
+          </div>
+          <!-- Каталог товаров --> 
+          <div class="items_present">
+            <h2>Выберите кабельную группу</h2>
+            <div class="items_prew">
+              <ul>
+                <li><a href="#"><img src="images/provod/VVG.jpg" width="45" height="45"><span class="top_item_link">Кабель силовой с ПВХ изоляцией (медный)</span> <span class="bottom_item_link">NYM-J, ВВГ, ВВГнг, ВВГнг-LS, ВВГЭНГ</span></a></li>
+                <li><a href="#"><img src="images/provod/AVBBSHV.jpg" width="45" height="45"><span class="top_item_link">Кабель силовой с ПВХ изоляц (алюмин/брониров)</span> <span class="bottom_item_link">АВВБ, АВВБГ, АВБбШв, АВВБГ, АВБбШнг</span></a></li>
+                <li><a href="#"><img src="images/provod/ASBL.jpg" width="45" height="45"><span class="top_item_link">Кабель силовой с бумаж пропит изоляц (алюмин)</span> <span class="bottom_item_link">АСБ, АСБл, АСБ2л, ААБл, ААБлГ, АСБ2л</span></a></li>
+                <li><a href="#"><img src="images/provod/silovoi_rezina.jpg" width="45" height="45"><span class="top_item_link">Кабель силовой гибкий в резиновой изоляции</span> <span class="bottom_item_link">АВРГ, ВРГ, КГ-660, КГН, РПШ</span></a></li>
+                <li><a href="#"><img src="images/provod/SPOV.jpg" width="45" height="45"><span class="top_item_link">Кабель судовой</span> <span class="bottom_item_link">КНР, КМПВ, СПОВ, НРШМ</span></a></li>
+                <li><a href="#"><img src="images/provod/kabel_upravleniya.jpg" width="45" height="45"><span class="top_item_link">Кабель управления</span> <span class="bottom_item_link">КПВ, КУПЭВ, КУПР, КРШУ, КРШС, КУПВ, КУПЭВнг-LS</span></a></li>
+                <li><a href="#"><img src="images/provod/kabel_visokochastotnii.jpg" width="45" height="45"><span class="top_item_link">Кабель симметричный высокочастотный</span> <span class="bottom_item_link">МКСБ, МКСАШП, МКСАБП, МКСК</span></a></li>
+                <li><a href="#"><img src="images/provod/provada_vivodnie.jpg" width="45" height="45"><span class="top_item_link">Провода выводные</span> <span class="bottom_item_link">ПВКВ, РКГМ, ВПП</span></a></li>
+                <li><a href="#"><img src="images/provod/provoda_avtomobilnie.jpg" width="45" height="45"><span class="top_item_link">Провода автомобильные</span> <span class="bottom_item_link">ПГВА, ПГВАЭ, ПГВАД, ПВГАБ</span></a></li>
+                <li><a href="#"><img src="images/provod/provoda_svjazi.jpg" width="45" height="45"><span class="top_item_link">Провода связи</span> <span class="bottom_item_link">ПРППМ, ПТПЖ, ПКСВ, П 274м, ПВЖ, ПТВЖ, ПРПВМ, ППЖ</span></a></li>
+                <li><a href="#"><img src="images/provod/provoda_dlja_geofizicheskih_rabot.jpg" width="45" height="45"><span class="top_item_link">Провода для геофизических работ</span> <span class="bottom_item_link">ГСП, ГПМП, ГПСМП, ГПСМПО</span></a></li>
+                <li><a href="#"><img src="images/provod/provod_termoelektrodnii.jpg" width="45" height="45"><span class="top_item_link">Провод термоэлектродный</span> <span class="bottom_item_link">ПТФ, ПТВ ХК, ПТФЭ, СФКЭ-ХА, КМТВ-ХК, СФКЭ-ХК, КМТВЭВ-М</span></a></li>
+                <li><a href="#"><img src="images/provod/AVVG.jpg" width="45" height="45"><span class="top_item_link">Кабель силовой с ПВХ изоляцией (алюмин)</span> <span class="bottom_item_link">АВВГ, АВВГнг, АВВГнг-ls, АВВГз, АВВ</span></a></li>
+                <li><a href="#"><img src="images/provod/APVP.jpg" width="45" height="45"><span class="top_item_link">Кабель силовой с изоляцией из сшитого полиэтилена (алюмин)</span> <span class="bottom_item_link">АПвП, АПвПу, АПвПу2г, АПвВг, АПвВнг</span></a></li>
+                <li><a href="#"><img src="images/provod/1222.jpg" width="45" height="45"><span class="top_item_link">Кабель силовой с бумаж пропитанной изоляц(медн)</span> <span class="bottom_item_link">СБ, СБл, СБГ, СБ2л, СБ2лГ, СБГ, ЦСБГ</span></a></li>
+                <li><a href="#"><img src="images/provod/AKVVG.jpg" width="45" height="45"><span class="top_item_link">Кабель контрольный (алюмин)</span> <span class="bottom_item_link">АКВВГ, АКВВГнг, АКВВГнг-LS, АКВВГЭнг-LS, АКВБбШв</span></a></li>
+                <li><a href="#"><img src="images/provod/kabel_mestnoi_svjazi.jpg" width="45" height="45"><span class="top_item_link">Кабель местной связи</span> <span class="bottom_item_link">КСПП, КСПЗП, КСППБ, КСПЗПБ, ЗКАШп, ЗКП, ЗКАБп</span></a></li>
+                <li><a href="#"><img src="images/provod/kabel_telefonnii.jpg" width="45" height="45"><span class="top_item_link">Кабель телефонный</span> <span class="bottom_item_link">ТПП, ТППЭП, ТППЭПз, ТРП, ТПВ, ТПВнг, ТППЭПзБ, ТРВ, ТППЭПБ</span></a></li>
+                <li><a href="#"><img src="images/provod/provada_montazhnie.jpg" width="45" height="45"><span class="top_item_link">Кабель монтажный универc</span> <span class="bottom_item_link">НВ, HВM, НВЭ, НВМЭ, МНВ, МГШВ, МКЭШ, КУИН, СОББИТ</span></a></li>
+                <li><a href="#"><img src="images/provod/provoda_avicionnie.jpg" width="45" height="45"><span class="top_item_link">Провода авиационные</span> <span class="bottom_item_link">БПВЛ, БПДО, БИФ, БПВЛЭ, БПДОЭ, БИФЭз, БИН, БИФ, БФС</span></a></li>
+                <li><a href="#"><img src="images/provod/provoda_izolirovannie.jpg" width="45" height="45"><span class="top_item_link">Провода изолированные для воздушных линий</span> <span class="bottom_item_link">СИП 2, СИП 3, СИП 1, СИП 2а</span></a></li>
+                <li><a href="#"><img src="images/provod/provoda_obmotochnie.jpg" width="45" height="45"><span class="top_item_link">Провода обмоточные</span> <span class="bottom_item_link">ПЭТ 155, ПСДКТ, ПЭТВ 1, ПСДТ, ПВДП, ПОЖ, ПЭШО, ПБД</span></a></li>
+                <li><a href="#"><img src="images/provod/provod_nagrevatelnii.jpg" width="45" height="45"><span class="top_item_link">Провод прогревочный</span> <span class="bottom_item_link">ПНСВ, ПГПЖ, ПНПЖ, ПНПЖч, ПНВЖ</span></a></li>
+                <li><a href="#"><img src="images/provod/VBBSHV.jpg" width="45" height="45"><span class="top_item_link">Кабель силовой с ПВХ изоляц (медн/бронир)</span> <span class="bottom_item_link">ВБбШв, ВБбШнг, ВБбШнг-ls, ВБбШвнг-ls</span></a></li>
+                <li><a href="#"><img src="images/provod/PVP.jpg" width="45" height="45"><span class="top_item_link">Кабель силовой с изоляц из полиэтилена (медь)</span> <span class="bottom_item_link">ПвВнг-LS, ПвПу2г, ПвПуг, ПвВГ, ПвБбШп</span></a></li>
+                <li><a href="#"><img src="images/provod/POLIM.jpg" width="45" height="45"><span class="top_item_link">Кабель с изоляц и оболоч из полимер композиций</span> <span class="bottom_item_link">ППГнг-HF, ПвПнг-HF, ПвПнг-FRHF</span></a></li>
+                <li><a href="#"><img src="images/provod/KVVG.jpg" width="45" height="45"><span class="top_item_link">Кабель контрольный (медный)</span> <span class="bottom_item_link">КВВГ, КВВГнг, КВВГнг-LS, КВВГЭнг, КВВГЭнг-LS</span></a></li>
+                <li><a href="#"><img src="images/provod/baraban.jpg" width="45" height="45"><span class="top_item_link">Кабельные барабаны</span> <span class="bottom_item_link">Продажа кабельных барабанов от производителя</span></a></li>
+                <li><a href="#"><img src="images/provod/kabel_nizkochastotnii.jpg" width="45" height="45"><span class="top_item_link">Кабель симметричный низкочастотный</span> <span class="bottom_item_link">ТЗГ, ТЗБ, ТЗБГ, ТЗПАШп</span></a></li>
+                <li><a href="#"><img src="images/provod/provod_soedinitelnii.jpg" width="45" height="45"><span class="top_item_link">Провода соединительные</span> <span class="bottom_item_link">ПВС, ШВВП, ПРС, ШВП, ПРМ, ПСГ, ШР, ШРО, ПВСП, ШПС</span></a></li>
+                <li><a href="#"><img src="images/provod/provoda_dlja_podvizhnogo-sostava.jpg" width="45" height="45"><span class="top_item_link">Провода для подвижного состава</span> <span class="bottom_item_link">ПС, ППСРВМ, ППСРМ, КПСРМ, ПРМТ, ППСВ, КПСРВМ</span></a></li>
+                <li><a href="#"><img src="images/provod/provod_ustanovochnii.jpg" width="45" height="45"><span class="top_item_link">Провода установочные</span> <span class="bottom_item_link">ПВ3, АПВ, ПВ1, ППВ, АППВ, ПРКА, ПВ2, ПВ4, ПВ1</span></a></li>
+                <li><a href="#"><img src="images/provod/provoda_neizolirovannie.jpg" width="45" height="45"><span class="top_item_link">Провода неизолированные</span> <span class="bottom_item_link">М, А, АС, МФ, МГ, АМГ, ПМЛ, МА, ПСО, МФ, АМГЛ, ПЩ</span></a></li>
+                <li><a href="#"><img src="images/provod/provod_termostoikii.jpg" width="45" height="45"><span class="top_item_link">Провод термостойкий</span> <span class="bottom_item_link">ПАЛ, ПВКВ, ПТЛ-200, ПТЛ-250, ПВКФ, ПТЛЭ-200</span></a></li>
+              </ul>                         
+            </div>
+          </div>
+        </main> 
+      </section>
+      <!-- Блок нижний слайдер --> 
+      <section id="footer_script">
+        <h2>Производители кабеля</h2>
+        <div id="slideshowCont"> 
+          <%= image_tag 'left.png', alt: 'Следующий', id: "next", width: 23, height: 42 %> 
+          <div id="slideShow"> 
+            <ul> 
+              <li>
+                <div class="slug"><a href="#"><img src="images/proizv1.png"  alt="Производитель" /></a></div> 
+                <div class="slug"><a href="#"><img src="images/proizv2.png"  alt="Производитель" /></a></div> 
+                <div class="slug"><a href="#"><img src="images/proizv3.png"  alt="Производитель" /></a></div>
+                <div class="slug"><a href="#"><img src="images/proizv4.png"  alt="Производитель" /></a></div> 
+                <div class="slug"><a href="#"><img src="images/proizv1.png"  alt="Производитель" /></a></div> 
+                <div class="slug"><a href="#"><img src="images/proizv2.png"  alt="Производитель" /></a></div>                 
+              </li> 
+              <li>
+                <div class="slug"><a href="#"><img src="images/proizv1.png"  alt="Производитель" /></a></div> 
+                <div class="slug"><a href="#"><img src="images/proizv2.png"  alt="Производитель" /></a></div> 
+                <div class="slug"><a href="#"><img src="images/proizv3.png"  alt="Производитель" /></a></div>
+                <div class="slug"><a href="#"><img src="images/proizv4.png"  alt="Производитель" /></a></div>
+                <div class="slug"><a href="#"><img src="images/proizv1.png"  alt="Производитель" /></a></div> 
+                <div class="slug"><a href="#"><img src="images/proizv2.png"  alt="Производитель" /></a></div>                
+              </li> 	
+            </ul> 
+          </div>
+          <%= image_tag 'right.png', alt: 'Предыдущий', id: "last", width: 23, height: 42 %> 
+        </div> 
+        <p id="back-top"><a href="#top"><span></span></a></p>     
+      </section>
+      <%= render '/layouts/footer'  %>
+    </div>   
+  </body>
 </html>
+<%= yield %>
