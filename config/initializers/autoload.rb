@@ -1,0 +1,1 @@
+require 'cableru_grabber'

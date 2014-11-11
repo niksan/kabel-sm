@@ -10,6 +10,8 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'devise'
 gem 'cancancan'
 gem 'friendly_id'
+gem 'nokogiri'
+gem 'simple_uri', '0.0.11'
 # gem 'therubyracer',  platforms: :ruby
 
 gem 'jquery-rails'
