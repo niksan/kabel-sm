@@ -2,8 +2,8 @@ module CableruGrabber
 
   DOMAIN='http://cable.ru'
   FIRST_ENTRIES = [
-#    { type: :main, uri: '/' },
-#    { type: :group, uri: '/engines/' },
+    { type: :main, uri: '/' },
+    { type: :group, uri: '/engines/' },
     { type: :group, uri: '/pumps/' }
   ]
   TYPES = {
@@ -14,22 +14,22 @@ module CableruGrabber
     },
     razdel: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(razdel-(\w)*\.php)/,
-      li_match: /<li><a href="((\/([a-z_-])*\/)?(razdel-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
+      li_match: /<a( style="display: block;")? href="((\/([a-z_-])*\/)?(razdel-(\w)*\.php))"( title="\W*")?>(\W*)<\/a>/,
       css_selector: '#content .column-2',
     },
     group: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(group-(\w)*\.php)/,
-      li_match: /<li><a href="((\/([a-z_-])*\/)?(group-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
+      li_match: /<a( style="display: block;")? href="((\/([a-z_-])*\/)?(razdel-(\w)*\.php))"( title="\W*")?>(\W*)<\/a>/,
       css_selector: '#content .column-2',
     },
     marka: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(marka-(\w)*\.php)/,
-      li_match: /<li><a href="((\/([a-z_-])*\/)?(marka-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
+      li_match: /<a( style="display: block;")? href="((\/([a-z_-])*\/)?(marka-(\w)*\.php))"( title="\W*")?>(\W*)<\/a>/,
       css_selector: '#content .column-2',
     },
     related: {
       link_match: /http:\/\/cable\.ru\/(related\/(\w)*\.php)/,
-      li_match: /<li><a href="(\/related\/(\w)*\.(php))(")( title="\W*")?(>)(\W*)<\/a><\/li>/,
+      li_match: /<a( style="display: block;")? href="(\/related\/(\w)*\.(php))(")( title="\W*")?(>)(\W*)<\/a>/,
       css_selector: '#content .column-2',
     }
   }
@@ -58,7 +58,18 @@ module CableruGrabber
         n = Nokogiri::HTML(source)
         part = n.css(TYPES[type][:css_selector]).to_s
         TYPES.each do |type_name, type_params|
-          r = part.scan(type_params[:li_match]).map { |r| { uri: build_uri(r[0]), title: r[6], type: detect_uri_type(build_uri(r[0])) } }
+          matches =  part.scan(type_params[:li_match])
+          r = if !matches.empty?
+            matches.map do |r|
+              {
+                uri: build_uri(r[1]),
+                title: r[7],
+                type: detect_uri_type(build_uri(r[1]))
+              }
+            end
+          else
+            []
+          end
           result += r
         end
         result
