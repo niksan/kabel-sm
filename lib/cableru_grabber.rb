@@ -26,6 +26,11 @@ module CableruGrabber
       link_match: /http:\/\/cable\.ru\/(\D)*\/(marka-(\w)*\.php)/,
       li_match: /<li><a href="((\/([a-z_-])*\/)?(marka-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
       css_selector: '#content .column-2',
+    },
+    related:{
+      link_match: /http:\/\/cable\.ru\/(related\/(\w)*\.php)/,
+      li_match: /<li><a href="(\/related\/(\w)*\.(php))(")( title="\W*")?(>)(\W*)<\/a><\/li>/,
+      css_selector: '#content .column-2',
     }
   }
 
@@ -69,6 +74,7 @@ module CableruGrabber
         h.each do |k, v|
           return k if uri.match v
         end
+        nil
       end
     
   end
