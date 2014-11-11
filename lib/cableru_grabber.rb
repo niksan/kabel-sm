@@ -2,8 +2,8 @@ module CableruGrabber
 
   DOMAIN='http://cable.ru'
   FIRST_ENTRIES = [
-#    { type: :main, uri: '/' },
-    { type: :group, uri: '/engines/' }#,
+    { type: :main, uri: '/' }#,
+#    { type: :group, uri: '/engines/' },
 #    { type: :group, uri: '/pumps/' }
   ]
   TYPES = {
@@ -49,14 +49,18 @@ module CableruGrabber
         n = Nokogiri::HTML(source)
         part = n.css(TYPES[type][:css_selector]).to_s
         TYPES.each do |type_name, type_params|
-          r = part.scan(type_params[:li_match]).map { |r| { uri: @uri+r[0], title: r[6] } }
+          r = part.scan(type_params[:li_match]).map { |r| { uri: @uri+r[0], title: r[6], type: detect_uri_type(@uri+r[0]) } }
           result << r
         end
         result.select { |r| r.size > 2 }[0]
       end
 
       def detect_uri_type(uri)
-       # 
+        h = {}
+        TYPES.each { |k,v| h[k] = v[:link_match] }
+        h.each do |k, v|
+          return k if uri.match v
+        end
       end
     
   end
