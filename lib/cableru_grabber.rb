@@ -2,9 +2,9 @@ module CableruGrabber
 
   DOMAIN='http://cable.ru'
   FIRST_ENTRIES = [
-    { type: :main, uri: '/' }#,
+#    { type: :main, uri: '/' },
 #    { type: :group, uri: '/engines/' },
-#    { type: :group, uri: '/pumps/' }
+    { type: :group, uri: '/pumps/' }
   ]
   TYPES = {
     main: {
@@ -13,7 +13,7 @@ module CableruGrabber
       css_selector: '#content .column div.catalog.module'
     },
     razdel: {
-      link_match: /http:\/\/cable\.ru\/(\D)*\/(razdel-(\d)*\.php)/,
+      link_match: /http:\/\/cable\.ru\/(\D)*\/(razdel-(\w)*\.php)/,
       li_match: /<li><a href="((\/([a-z_-])*\/)?(razdel-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
       css_selector: '#content .column-2',
     },
@@ -59,7 +59,7 @@ module CableruGrabber
         part = n.css(TYPES[type][:css_selector]).to_s
         TYPES.each do |type_name, type_params|
           r = part.scan(type_params[:li_match]).map { |r| { uri: build_uri(r[0]), title: r[6], type: detect_uri_type(build_uri(r[0])) } }
-          result << r
+          result += r
         end
         result
       end
