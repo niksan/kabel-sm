@@ -7,10 +7,10 @@ module CableruGrabber
 #    { type: :group, '/pumps/' }
   ]
   TYPES = {
-    main: { selector_method: 'main_selector' },
+    main: { css_selector: '#content .column div.catalog.module' },
     razdel: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(razdel-(\d)*\.php)/,
-      css_selector: '#content .column div.catalog.module',
+      css_selector: '#content .column2',
     },
     group: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(group-(\w)*\.php)/,
