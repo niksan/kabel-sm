@@ -2,9 +2,9 @@ module CableruGrabber
 
   DOMAIN='http://cable.ru'
   FIRST_ENTRIES = [
-    { type: :main, uri: '/' },
-    { type: :group, uri: '/engines/' },
-    { type: :group, uri: '/pumps/' }
+    { type: :main, uri: DOMAIN+'/' },
+    { type: :group, uri: DOMAIN+'/engines/' },
+    { type: :group, uri: DOMAIN+'/pumps/' }
   ]
   TYPES = {
     main: {
@@ -39,9 +39,16 @@ module CableruGrabber
     def grab(entries=FIRST_ENTRIES)
       start_time = Time.zone.now
       entries.each do |entry|
-        @uri = DOMAIN + entry[:uri]
+        @uri = entry[:uri]
         source = SimpleUri.req(@uri)
-        puts compact_links(get_links(source, entry[:type])).inspect
+        puts @uri
+        if entry[:type] != :marka
+          links = get_links(source, entry[:type])
+          puts "Finded #{links.size} links"
+          self.grab(links)
+        else
+          puts '!!!MARKA'
+        end
       end
       runtime = Time.zone.now - start_time
       puts "RUNTIME - #{ runtime }"
