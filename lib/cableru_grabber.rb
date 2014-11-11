@@ -14,17 +14,17 @@ module CableruGrabber
     },
     razdel: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(razdel-(\d)*\.php)/,
-      li_match: /<li><a href="((\/(\D)*\/)?(razdel-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
+      li_match: /<li><a href="((\/([a-z_-])*\/)?(razdel-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
       css_selector: '#content .column-2',
     },
     group: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(group-(\w)*\.php)/,
-      li_match: /<li><a href="((\/(\D)*\/)?(group-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
+      li_match: /<li><a href="((\/([a-z_-])*\/)?(group-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
       css_selector: '#content .column-2',
     },
     marka: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(marka-(\w)*\.php)/,
-      li_match: /<li><a href="((\/(\D)*\/)?(marka-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
+      li_match: /<li><a href="((\/([a-z_-])*\/)?(marka-(\w)*\.php))"( title="\W*")?>(\W*)<\/a><\/li>/,
       css_selector: '#content .column-2',
     }
   }
@@ -36,23 +36,31 @@ module CableruGrabber
       entries.each do |entry|
         @uri = DOMAIN + entry[:uri]
         source = SimpleUri.req(@uri)
-        puts get_links(source, entry[:type]).inspect
+        puts compact_links(get_links(source, entry[:type])).inspect
       end
       runtime = Time.zone.now - start_time
       puts "RUNTIME - #{ runtime }"
     end
 
     private
+      
+      def compact_links(links)
+        links.select { |l| l.size>0 }
+      end
 
       def get_links(source, type)
         result = []
         n = Nokogiri::HTML(source)
         part = n.css(TYPES[type][:css_selector]).to_s
         TYPES.each do |type_name, type_params|
-          r = part.scan(type_params[:li_match]).map { |r| { uri: @uri+r[0], title: r[6], type: detect_uri_type(@uri+r[0]) } }
+          r = part.scan(type_params[:li_match]).map { |r| { uri: build_uri(r[0]), title: r[6], type: detect_uri_type(@uri+r[0]) } }
           result << r
         end
-        result.select { |r| r.size > 2 }[0]
+        result
+      end
+
+      def build_uri(last)
+        @uri + last.match(/^(\/)?(.*)/)[2]
       end
 
       def detect_uri_type(uri)
