@@ -10,14 +10,17 @@ module CableruGrabber
     main: { css_selector: '#content .column div.catalog.module' },
     razdel: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(razdel-(\d)*\.php)/,
+      li_match: /<li><a href="(\/(\D)*\/(razdel-(\d)*\.php))" title="\W*">(\W*)<\/a><\/li>/,
       css_selector: '#content .column2',
     },
     group: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(group-(\w)*\.php)/,
+      li_match: /<li><a href="(\/(\D)*\/(group-(\w)*\.php))" title="\W*">(\W*)<\/a><\/li>/,
       selector_method: '#content .column2',
     },
     marka: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(marka-(\w)*\.php)/,
+      li_match: /<li><a href="(\/(\D)*\/(marka-(\w)*\.php))" title="\W*">(\W*)<\/a><\/li>/,
       selector_method: '#content .column2',
     }
   }
