@@ -52,6 +52,7 @@ module CableruGrabber
       entries.each do |entry|
         @uri = entry[:uri]
         puts @uri
+        sleep(5)
         source = SimpleUri.req(@uri)
         if entry[:type] != :marka
           links = get_links(source, entry[:type])
