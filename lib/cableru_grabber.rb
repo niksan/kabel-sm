@@ -6,6 +6,15 @@ module CableruGrabber
     { type: :group, uri: DOMAIN+'/engines/' },
     { type: :group, uri: DOMAIN+'/pumps/' }
   ]
+  REGEXPS = {
+    title: '[а-яА-Яa-zA-Z \(\)-_]*',
+    href_uri: {
+      razdel: '((\/([a-z_-])*\/)?(razdel-(\w)*\.php))',
+      group: '((\/([a-z_-])*\/)?(group-(\w)*\.php))',
+      marka: '((\/([a-z_-])*\/)?(marka-(\w)*\.php))',
+      related: '(\/related\/(\w)*\.(php))',
+    }
+  }
   TYPES = {
     main: {
       link_match: /@@!!@@!!\)\)XuiPizdaaa/,
@@ -14,22 +23,22 @@ module CableruGrabber
     },
     razdel: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(razdel-(\w)*\.php)/,
-      li_match: /<a( style="display: block;")? href="((\/([a-z_-])*\/)?(razdel-(\w)*\.php))"( title="\W*")?>(\W*)<\/a>/,
+      li_match: /<a( style="display: block;")? href="#{ REGEXPS[:href_uri][:razdel] }"( title="#{ REGEXPS[:title] }")?>(#{ REGEXPS[:title] })<\/a>/,
       css_selector: '#content .column-2',
     },
     group: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(group-(\w)*\.php)/,
-      li_match: /<a( style="display: block;")? href="((\/([a-z_-])*\/)?(razdel-(\w)*\.php))"( title="\W*")?>(\W*)<\/a>/,
+      li_match: /<a( style="display: block;")? href="#{ REGEXPS[:href_uri][:group] }"( title="#{ REGEXPS[:title] }")?>(#{ REGEXPS[:title] })<\/a>/,
       css_selector: '#content .column-2',
     },
     marka: {
       link_match: /http:\/\/cable\.ru\/(\D)*\/(marka-(\w)*\.php)/,
-      li_match: /<a( style="display: block;")? href="((\/([a-z_-])*\/)?(marka-(\w)*\.php))"( title="\W*")?>(\W*)<\/a>/,
+      li_match: /<a( style="display: block;")? href="#{ REGEXPS[:href_uri][:marka] }"( title="#{ REGEXPS[:title] }")?>(#{ REGEXPS[:title] })<\/a>/,
       css_selector: '#content .column-2',
     },
     related: {
       link_match: /http:\/\/cable\.ru\/(related\/(\w)*\.php)/,
-      li_match: /<a( style="display: block;")? href="(\/related\/(\w)*\.(php))(")( title="\W*")?(>)(\W*)<\/a>/,
+      li_match: /<a( style="display: block;")? href="#{ REGEXPS[:href_uri][:related] }(")( title="#{ REGEXPS[:title] }")?(>)(#{ REGEXPS[:title] })<\/a>/,
       css_selector: '#content .column-2',
     }
   }
@@ -37,21 +46,27 @@ module CableruGrabber
   class << self
 
     def grab(entries=FIRST_ENTRIES)
+      @categories_counter = 0
+      @goods_counter = 0
       start_time = Time.zone.now
       entries.each do |entry|
         @uri = entry[:uri]
-        source = SimpleUri.req(@uri)
         puts @uri
+        source = SimpleUri.req(@uri)
         if entry[:type] != :marka
           links = get_links(source, entry[:type])
           puts "Finded #{links.size} links"
+          @categories_counter += links.size
           self.grab(links)
         else
+          @goods_counter += 1
           puts '!!!MARKA'
         end
       end
       runtime = Time.zone.now - start_time
       puts "RUNTIME - #{ runtime }"
+      puts "GOODS - #{ @goods_counter }"
+      puts "TOTAL LINKS - #{ @categories_counter }"
     end
 
     private
@@ -83,7 +98,7 @@ module CableruGrabber
       end
 
       def build_uri(last)
-        @uri + last.match(/^(\/)?(.*)/)[2]
+        @uri.match(/(http:\/\/([а-яА-Яa-zA-Z \(\)-_]*)?)(\/[а-яА-Яa-zA-Z \(\)-_]*(\.php)?)/)[1] + '/' + last.match(/^(\/)?(.*)/)[2]
       end
 
       def detect_uri_type(uri)
