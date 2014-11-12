@@ -45,14 +45,24 @@ module CableruGrabber
 
   class << self
 
-    def grab(entries=FIRST_ENTRIES)
+    def start
       @categories_counter = 0
       @goods_counter = 0
       start_time = Time.zone.now
+      grab(FIRST_ENTRIES)
+      runtime = Time.zone.now - start_time
+      puts "RUNTIME - #{ runtime }"
+      puts "GOODS - #{ @goods_counter }"
+      puts "TOTAL LINKS - #{ @categories_counter }"
+    end
+
+    def grab(entries=FIRST_ENTRIES)
       entries.each do |entry|
         @uri = entry[:uri]
         puts @uri
-        sleep(5)
+        sleep_time = rand(7)
+        puts "SLEEP - #{sleep_time} seconds"
+        sleep(sleep_time)
         source = SimpleUri.req(@uri)
         if entry[:type] != :marka
           links = get_links(source, entry[:type])
@@ -64,10 +74,6 @@ module CableruGrabber
           puts '!!!MARKA'
         end
       end
-      runtime = Time.zone.now - start_time
-      puts "RUNTIME - #{ runtime }"
-      puts "GOODS - #{ @goods_counter }"
-      puts "TOTAL LINKS - #{ @categories_counter }"
     end
 
     private
