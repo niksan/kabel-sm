@@ -1,17 +1,9 @@
+require 'get_proxy'
+
 module CableruGrabber
 
   include HTTParty
-  default_timeout 10
-
-  USERAGENTS = [
-    'Mozilla/5.0 (X11; U; Linux; pt-PT) AppleWebKit/523.15 (KHTML, like Gecko, Safari/419.3) Arora/0.4',
-    'Mozilla/5.0 (X11; U; Linux; nb-NO) AppleWebKit/527+ (KHTML, like Gecko, Safari/419.3) Arora/0.4',
-    'Mozilla/5.0 (X11; U; Linux; it-IT) AppleWebKit/527+ (KHTML, like Gecko, Safari/419.3) Arora/0.4 (Change: 413 12f13f8)',
-    'Mozilla/5.0 (X11; U; Linux; it-IT) AppleWebKit/523.15 (KHTML, like Gecko, Safari/419.3) Arora/0.4',
-    'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2; Avant Browser; Avant Browser; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; InfoPath.2)'
-    ]
-
-  PROXYES = %W(86.122.124.11 200.29.67.29 218.108.170.163)
+  default_timeout 2
 
   DOMAIN='http://cable.ru'
   FIRST_ENTRIES = [
@@ -101,6 +93,8 @@ module CableruGrabber
           request_retrying(uri, proxy_ip)
         rescue Errno::EHOSTUNREACH
           request_retrying(uri, proxy_ip)
+        rescue Net::ReadTimeout
+          request_retrying(uri, proxy_ip)
         end
       end
 
@@ -113,11 +107,11 @@ module CableruGrabber
       end
 
       def proxyes
-        @proxyes ||= PROXYES
+        @proxyes ||= GetProxy.fresh!
       end
 
       def useragent
-        USERAGENTS[rand(USERAGENTS.size)]
+        GetProxy::USERAGENTS[rand(GetProxy::USERAGENTS.size)]
       end
       
       def compact_links(links)
