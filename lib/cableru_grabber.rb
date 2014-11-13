@@ -1,5 +1,18 @@
 module CableruGrabber
 
+  include HTTParty
+  default_timeout 10
+
+  USERAGENTS = [
+    'Mozilla/5.0 (X11; U; Linux; pt-PT) AppleWebKit/523.15 (KHTML, like Gecko, Safari/419.3) Arora/0.4',
+    'Mozilla/5.0 (X11; U; Linux; nb-NO) AppleWebKit/527+ (KHTML, like Gecko, Safari/419.3) Arora/0.4',
+    'Mozilla/5.0 (X11; U; Linux; it-IT) AppleWebKit/527+ (KHTML, like Gecko, Safari/419.3) Arora/0.4 (Change: 413 12f13f8)',
+    'Mozilla/5.0 (X11; U; Linux; it-IT) AppleWebKit/523.15 (KHTML, like Gecko, Safari/419.3) Arora/0.4',
+    'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2; Avant Browser; Avant Browser; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; InfoPath.2)'
+    ]
+
+  PROXYES = %W(86.122.124.11 200.29.67.29 218.108.170.163)
+
   DOMAIN='http://cable.ru'
   FIRST_ENTRIES = [
     { type: :main, uri: DOMAIN+'/' },
@@ -46,6 +59,8 @@ module CableruGrabber
   class << self
 
     def start
+      @proxy_number ||= 0
+      @proxy_max_number = proxyes.size - 1
       @categories_counter = 0
       @goods_counter = 0
       start_time = Time.zone.now
@@ -60,10 +75,8 @@ module CableruGrabber
       entries.each do |entry|
         @uri = entry[:uri]
         puts @uri
-        sleep_time = rand(7)
-        puts "SLEEP - #{sleep_time} seconds"
-        sleep(sleep_time)
-        source = SimpleUri.req(@uri)
+        @proxy_number += 1
+        source = request(@uri, proxyes[@proxy_number])
         if entry[:type] != :marka
           links = get_links(source, entry[:type])
           puts "Finded #{links.size} links"
@@ -77,6 +90,35 @@ module CableruGrabber
     end
 
     private
+      
+      def request(uri, proxy_ip)
+        begin
+          http_proxy proxy_ip, 80
+          source = self.get(uri, headers: { 'User-Agent' => useragent })
+        rescue SocketError
+          request_retrying(uri, proxy_ip)
+        rescue Net::OpenTimeout
+          request_retrying(uri, proxy_ip)
+        rescue Errno::EHOSTUNREACH
+          request_retrying(uri, proxy_ip)
+        end
+      end
+
+      def request_retrying(uri, proxy_ip)
+        puts 'retrying!'
+        @proxy_number += 1
+        @proxy_number = 0 if @proxy_max_number < @proxy_number
+        proxy_ip = proxyes[@proxy_number]
+        request(uri, proxy_ip)
+      end
+
+      def proxyes
+        @proxyes ||= PROXYES
+      end
+
+      def useragent
+        USERAGENTS[rand(USERAGENTS.size)]
+      end
       
       def compact_links(links)
         links.select { |l| l.size>0 }
