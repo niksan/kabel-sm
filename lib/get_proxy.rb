@@ -1,6 +1,9 @@
-module GetProxy
+class GetProxy
 
-  include HTTParty
+  SOURCES = {
+    hidemyass: 'http://proxylist.hidemyass.com/search-1378962',
+    localhost: 'http://localhost:3000/404.html'
+  }
 
   USERAGENTS = [
     'Mozilla/5.0 (X11; U; Linux; pt-PT) AppleWebKit/523.15 (KHTML, like Gecko, Safari/419.3) Arora/0.4',
@@ -15,11 +18,60 @@ module GetProxy
     'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.7 (KHTML, like Gecko) RockMelt/0.8.36.128 Chrome/7.0.517.44 Safari/534.7',
     'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-US) AppleWebKit/534.16 (KHTML, like Gecko) RockMelt/0.9.50.518 Chrome/10.0.648.205 Safari/534.16'
     ]
-
-  PROXYES = %W(218.201.38.49 118.26.147.119 101.4.60.50 124.240.187.79 218.108.170.173)
   
-  def self.fresh!
-    PROXYES
+  def initialize
+    @proxyes = []
+  end
+
+  def proxy
+    @proxyes = self.class.fresh! if @proxyes.empty? 
+    @proxyes.pop
+  end
+
+  def useragent
+    USERAGENTS.sample
+  end
+  
+  def anonymize
+    { proxy: proxy, useragent: useragent }
+  end
+
+  class << self
+
+    def fresh!
+      from_hidemyass
+    end
+
+    def from_hidemyass
+      addresses = []
+      none_classes = []
+      html_body = HTTParty.get(SOURCES[:hidemyass])
+      Nokogiri::HTML(html_body).css('table#listable > tbody > tr > td:nth-child(2) > span').each do |span|
+        address = ''
+        span.children.each do |el|
+          none_classes.uniq!
+          if el.name == 'style' #find styles with display-none
+            el.children.first.text.force_encoding("utf-8").each_line do |line|
+              if m = line.match(/\.(\S*)({display:(none||inline)})/)
+                if m[3] == 'none'
+                  none_classes << m[1].force_encoding("utf-8")
+                end
+              end
+            end
+          end
+          unless el.name == 'style'
+            if el.attributes['style'].to_s.force_encoding("utf-8") != 'display:none'
+              unless el.attributes['class'].to_s.force_encoding("utf-8").in?(none_classes)
+                address += el.text
+              end
+            end
+          end
+        end
+        addresses << address
+      end
+      addresses
+    end
+
   end
 
 end
