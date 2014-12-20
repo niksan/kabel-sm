@@ -1,2 +1,2 @@
 require 'cableru_grabber'
-require 'get_proxy'
+require 'anonymous_anonym'

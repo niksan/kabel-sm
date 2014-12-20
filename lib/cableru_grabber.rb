@@ -1,5 +1,3 @@
-require 'get_proxy'
-
 module CableruGrabber
 
   include HTTParty
@@ -51,8 +49,7 @@ module CableruGrabber
   class << self
 
     def start
-      @proxy_number ||= 0
-      @proxy_max_number = proxyes.size - 1
+      @get_proxy = AnonymousAnonym.new
       @categories_counter = 0
       @goods_counter = 0
       start_time = Time.zone.now
@@ -67,11 +64,14 @@ module CableruGrabber
       entries.each do |entry|
         @uri = entry[:uri]
         puts @uri
-        @proxy_number += 1
-        source = request(@uri, proxyes[@proxy_number])
+        source = request(@uri, @get_proxy.proxy)
         if entry[:type] != :marka
           links = get_links(source, entry[:type])
           puts "Finded #{links.size} links"
+          if links.size == 0
+            puts source
+            raise '!!!'
+          end
           @categories_counter += links.size
           self.grab(links)
         else
@@ -84,34 +84,37 @@ module CableruGrabber
     private
       
       def request(uri, proxy_ip)
-        begin
-          http_proxy proxy_ip, 80
-          source = self.get(uri, headers: { 'User-Agent' => useragent })
-        rescue SocketError
-          request_retrying(uri, proxy_ip)
-        rescue Net::OpenTimeout
-          request_retrying(uri, proxy_ip)
-        rescue Errno::EHOSTUNREACH
-          request_retrying(uri, proxy_ip)
-        rescue Net::ReadTimeout
-          request_retrying(uri, proxy_ip)
+        source = begin
+                   http_proxy proxy_ip, 80
+                   self.get(uri, headers: { 'User-Agent' => useragent })
+                 rescue SocketError
+                   request_retrying uri
+                 rescue Net::OpenTimeout
+                   request_retrying uri
+                 rescue Errno::EHOSTUNREACH
+                   request_retrying uri
+                 rescue Net::ReadTimeout
+                   request_retrying uri
+                 rescue Exception => e
+                   puts e
+                   sleep(5)
+                   request_retrying uri
+                 end
+        if source.match(/id=\"map_europe\"/) && source.match(/id=\"map_ukraine\"/) && source.match(/id=\"map_east\"/) #Заблочили, пробуем еще раз...
+           puts 'ЗАПАЛИЛИ!!!'
+           request_retrying uri
+        else
+          source
         end
       end
 
-      def request_retrying(uri, proxy_ip)
+      def request_retrying(uri)
         puts 'retrying!'
-        @proxy_number += 1
-        @proxy_number = 0 if @proxy_max_number < @proxy_number
-        proxy_ip = proxyes[@proxy_number]
-        request(uri, proxy_ip)
-      end
-
-      def proxyes
-        @proxyes ||= GetProxy.fresh!
+        request(uri, @get_proxy.proxy)
       end
 
       def useragent
-        GetProxy::USERAGENTS[rand(GetProxy::USERAGENTS.size)]
+        @get_proxy.useragent
       end
       
       def compact_links(links)
