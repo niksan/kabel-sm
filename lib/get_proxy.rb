@@ -1,7 +1,7 @@
 class GetProxy
 
   SOURCES = {
-    hidemyass: 'http://proxylist.hidemyass.com/search-1378962',
+    hidemyass: 'http://proxylist.hidemyass.com/search-1325704',
     localhost: 'http://localhost:3000/404.html'
   }
 
@@ -25,17 +25,13 @@ class GetProxy
 
   def proxy
     @proxyes = self.class.fresh! if @proxyes.empty? 
-    @proxyes.pop
+    @proxyes.shift
   end
 
   def useragent
     USERAGENTS.sample
   end
   
-  def anonymize
-    { proxy: proxy, useragent: useragent }
-  end
-
   class << self
 
     def fresh!
