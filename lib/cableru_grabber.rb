@@ -68,10 +68,10 @@ module CableruGrabber
         if entry[:type] != :marka
           links = get_links(source, entry[:type])
           puts "Finded #{links.size} links"
-          if links.size == 0
-            puts source
-            raise '!!!'
-          end
+          #if links.size == 0
+          #  puts source
+          #  raise '!!!'
+          #end
           @categories_counter += links.size
           self.grab(links)
         else
