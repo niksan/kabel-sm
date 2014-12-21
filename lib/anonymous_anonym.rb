@@ -76,7 +76,6 @@ class AnonymousAnonym
         proxyes << { ip_address: address, port: td_s[2].text.to_i }
       end
       proxyes
-
-  end
+    end
 
 end
