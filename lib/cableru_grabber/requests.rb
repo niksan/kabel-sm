@@ -5,21 +5,14 @@ module CableruGrabber::Requests
     source = begin
                http_proxy(@anonymizer.proxy[:ip_address], @anonymizer.proxy[:port])
                self.get(uri, headers: { 'User-Agent' => useragent })
-             rescue SocketError
+             rescue SocketError, Net::OpenTimeout, Net::ReadTimeout, Errno::EHOSTUNREACH, Errno::ECONNREFUSED, Errno::ECONNRESET, EOFError
                request_retrying uri
-             rescue Net::OpenTimeout
-               request_retrying uri
-             rescue Errno::EHOSTUNREACH
-               request_retrying uri
-             rescue Net::ReadTimeout
-               request_retrying uri
-             rescue Errno::ECONNREFUSED
-               request_retrying uri
+             rescue SystemExit, Interrupt; SignalException raise
              rescue Exception => e
                puts e
-               sleep(5)
                request_retrying uri
              end
+    request_retrying(uri) unless source.code == 200 || source.code == 304
     if source.match(/id=\"map_europe\"/) && source.match(/id=\"map_ukraine\"/) && source.match(/id=\"map_east\"/)
       # блокировка на стороне cable.ru
       print '!'
