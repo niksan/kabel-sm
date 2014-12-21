@@ -3,7 +3,7 @@ module CableruGrabber::Requests
   def request(uri, anonymizer)
     @anonymizer = anonymizer
     source = begin
-               http_proxy(@anonymizer.proxy[:ip_address], 80)
+               http_proxy(@anonymizer.proxy[:ip_address], @anonymizer.proxy[:port])
                self.get(uri, headers: { 'User-Agent' => useragent })
              rescue SocketError
                request_retrying uri
