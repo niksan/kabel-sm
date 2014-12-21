@@ -45,4 +45,5 @@ module CableruGrabber
       css_selector: '#content .column-2',
     }
   }
+
 end
