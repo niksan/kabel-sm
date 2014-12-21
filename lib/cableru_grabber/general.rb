@@ -21,13 +21,13 @@ module CableruGrabber::General
         links = get_links(source, entry[:type], @url)
         puts "(#{links.size})"
         @categories_counter += links.size
+        page_to_application(source, entry[:type])
         self.grab(links)
       else
         @goods_counter += 1
+        page_to_application(source, entry[:type])
         puts '(M)'
       end
-
-
     end
   end
 
