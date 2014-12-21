@@ -44,7 +44,6 @@ class AnonymousAnonym
       none_classes = []
       html_body = HTTParty.get(SOURCES[:hidemyass][@list])
 
-      #TODO other lists with other ports
       Nokogiri::HTML(html_body).css('table#listable > tbody > tr').each do |tr|
         td_s = []
         tr.children.each do |tr_ch|
