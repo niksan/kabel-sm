@@ -24,7 +24,7 @@ module CableruGrabber::Requests
       # блокировка на стороне cable.ru
       print '!'
       request_retrying uri
-    elsif source.lines.count < 200
+    elsif !source.match(/Кабель.РФ/)
       # страница не cable.ru, предположительно, страница прокси-сервера
       print '#'
       request_retrying uri
