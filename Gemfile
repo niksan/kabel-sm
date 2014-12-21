@@ -12,7 +12,8 @@ gem 'cancancan'
 gem 'friendly_id'
 gem 'nokogiri'
 gem 'httparty'
-# gem 'therubyracer',  platforms: :ruby
+gem 'therubyracer',  platforms: :ruby
+gem 'ancestry'
 
 gem 'jquery-rails'
 gem 'turbolinks'
