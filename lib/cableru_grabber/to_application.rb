@@ -18,6 +18,8 @@ module CableruGrabber::ToApplication
       ###
     when :marka
       ###
+    when :main
+      nil
     else
       raise CableruGrabber::EntryTypeError
     end
