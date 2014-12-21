@@ -13,10 +13,6 @@ class AnonymousAnonym
     @list = list.to_sym
   end
 
-  def useragents
-    @useragents ||= get_useragents
-  end
-
   def proxy
     @proxyes = get_proxyes if @proxyes.empty? 
     @proxyes.shift
@@ -26,9 +22,15 @@ class AnonymousAnonym
     useragents.sample
   end
 
-  def get_proxyes
-    from_hidemyass
-  end
+  protected
+
+    def get_proxyes
+      from_hidemyass
+    end
+
+    def useragents
+      @useragents ||= get_useragents
+    end
   
   private
 
