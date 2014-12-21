@@ -32,9 +32,9 @@ module CableruGrabber
         if entry[:type] != :marka
           links = get_links(source, entry[:type], @url)
           puts "(#{links.size})"
-          if links.size == 0
+          if links.size.zero?
             filepath = Rails.root + 'public/cableru_debug.html'
-            open(filepath, '2'){ |f| f h }
+            File.write(filepath, source.force_encoding("utf-8"))
             raise CableruError::ZeroLinksError
           end
           @categories_counter += links.size
