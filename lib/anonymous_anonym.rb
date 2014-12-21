@@ -54,20 +54,19 @@ class AnonymousAnonym
         address = ''
         span.children.each do |el|
           none_classes.uniq!
-          if el.name == 'style' #find styles with display-none
+          if el.name == 'style'
             el.children.first.text.force_encoding("utf-8").each_line do |line|
-              if m = line.match(/\.(\S*)({display:(none||inline)})/)
-                if m[3] == 'none'
-                  none_classes << m[1].force_encoding("utf-8")
-                end
+              m = line.match(/\.(\S*)({display:(none||inline)})/)
+              if m && m[3] == 'none'
+                none_classes << m[1].force_encoding("utf-8")
               end
             end
           end
           unless el.name == 'style'
-            if el.attributes['style'].to_s.force_encoding("utf-8") != 'display:none'
-              unless el.attributes['class'].to_s.force_encoding("utf-8").in?(none_classes)
-                address += el.text
-              end
+            display_inline = (el.attributes['style'].to_s.force_encoding("utf-8") != 'display:none')
+            hyded_by_css = el.attributes['class'].to_s.force_encoding("utf-8").in?(none_classes)
+            if display_inline && !hyded_by_css
+              address += el.text
             end
           end
         end
