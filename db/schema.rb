@@ -22,14 +22,16 @@ ActiveRecord::Schema.define(version: 20141221195617) do
     t.string   "image"
     t.string   "ancestry"
     t.string   "slug"
-    t.string   "cableru_url"
+    t.string   "type"
+    t.string   "external_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "categories", ["ancestry"], name: "index_categories_on_ancestry", using: :btree
-  add_index "categories", ["cableru_url"], name: "index_categories_on_cableru_url", using: :btree
+  add_index "categories", ["external_url"], name: "index_categories_on_external_url", using: :btree
   add_index "categories", ["slug"], name: "index_categories_on_slug", using: :btree
+  add_index "categories", ["type"], name: "index_categories_on_type", using: :btree
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false

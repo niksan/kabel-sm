@@ -6,12 +6,14 @@ class CreateCategories < ActiveRecord::Migration
       t.string :image
       t.string :ancestry
       t.string :slug
-      t.string :cableru_url
+      t.string :type
+      t.string :external_url
 
       t.timestamps
     end
     add_index :categories, :ancestry
     add_index :categories, :slug
-    add_index :categories, :cableru_url
+    add_index :categories, :type
+    add_index :categories, :external_url
   end
 end

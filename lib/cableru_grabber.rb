@@ -8,7 +8,7 @@ require 'cableru_grabber/general'
 
 module CableruGrabber
 
-  extend CableruGrabber::Errors
+  include CableruGrabber::Errors
   extend CableruGrabber::Links
   extend CableruGrabber::Requests
   extend CableruGrabber::ToApplication
