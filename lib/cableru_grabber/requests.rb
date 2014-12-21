@@ -3,7 +3,7 @@ module CableruGrabber::Requests
   def request(uri, anonymizer)
     @anonymizer = anonymizer
     source = begin
-               http_proxy(@anonymizer.proxy, 80)
+               http_proxy(@anonymizer.proxy[:ip_address], 80)
                self.get(uri, headers: { 'User-Agent' => useragent })
              rescue SocketError
                request_retrying uri
@@ -13,14 +13,21 @@ module CableruGrabber::Requests
                request_retrying uri
              rescue Net::ReadTimeout
                request_retrying uri
+             rescue Errno::ECONNREFUSED
+               request_retrying uri
              rescue Exception => e
                puts e
                sleep(5)
                request_retrying uri
              end
     if source.match(/id=\"map_europe\"/) && source.match(/id=\"map_ukraine\"/) && source.match(/id=\"map_east\"/)
-       print '!'
-       request_retrying uri
+      # блокировка на стороне cable.ru
+      print '!'
+      request_retrying uri
+    elsif source.lines.count < 200
+      # страница не cable.ru, предположительно, страница прокси-сервера
+      print '#'
+      request_retrying uri
     else
       source
     end

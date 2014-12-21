@@ -1,43 +1,57 @@
 class AnonymousAnonym
 
   SOURCES = {
-    hidemyass: 'http://proxylist.hidemyass.com/search-1325704',
+    hidemyass: {
+      all: 'http://proxylist.hidemyass.com/search-1292985',
+      web: 'http://proxylist.hidemyass.com/search-1325704'
+    },
     useragentstring: 'http://www.useragentstring.com/pages/All/'
   }
   
-  def initialize
+  def initialize(list=:all)
     @proxyes = []
+    @list = list.to_sym
   end
 
   def useragents
-    @useragents ||= self.class.useragents
+    @useragents ||= get_useragents
   end
 
   def proxy
-    @proxyes = self.class.proxyes if @proxyes.empty? 
+    @proxyes = get_proxyes if @proxyes.empty? 
     @proxyes.shift
   end
 
   def useragent
     useragents.sample
   end
+
+  def get_proxyes
+    from_hidemyass
+  end
   
-  class << self
+  private
 
-    def proxyes
-      from_hidemyass
-    end
-
-    def useragents
+    def get_useragents
       html_body = HTTParty.get(SOURCES[:useragentstring])
       Nokogiri::HTML(html_body).css('ul li a').map { |el| el.text }
     end
 
     def from_hidemyass
-      addresses = []
+      proxyes = []
       none_classes = []
-      html_body = HTTParty.get(SOURCES[:hidemyass])
-      Nokogiri::HTML(html_body).css('table#listable > tbody > tr > td:nth-child(2) > span').each do |span|
+      html_body = HTTParty.get(SOURCES[:hidemyass][@list])
+
+      #TODO other lists with other ports
+      Nokogiri::HTML(html_body).css('table#listable > tbody > tr').each do |tr|
+        td_s = []
+        tr.children.each do |tr_ch|
+          if tr_ch.name=='td'
+            td_s << tr_ch
+          end
+        end
+
+        span = td_s[1].children.first
         address = ''
         span.children.each do |el|
           none_classes.uniq!
@@ -58,10 +72,9 @@ class AnonymousAnonym
             end
           end
         end
-        addresses << address
+        proxyes << { ip_address: address, port: td_s[2].text.to_i }
       end
-      addresses
-    end
+      proxyes
 
   end
 
