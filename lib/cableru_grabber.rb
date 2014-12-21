@@ -1,10 +1,12 @@
 require 'anonymous_anonym'
 require 'cableru_grabber/settings'
+require 'cableru_grabber/errors'
 require 'cableru_grabber/links'
 require 'cableru_grabber/requests'
 
 module CableruGrabber
 
+  extend CableruGrabber::Errors
   extend CableruGrabber::Links
   extend CableruGrabber::Requests
 
@@ -29,12 +31,17 @@ module CableruGrabber
         source = request(@url, @anonymizer)
         if entry[:type] != :marka
           links = get_links(source, entry[:type], @url)
-          puts "Finded #{links.size} links"
+          puts "(#{links.size})"
+          if links.size == 0
+            filepath = Rails.root + 'public/cableru_debug.html'
+            open(filepath, '2'){ |f| f h }
+            raise CableruError::ZeroLinksError
+          end
           @categories_counter += links.size
           self.grab(links)
         else
           @goods_counter += 1
-          puts '!!!MARKA'
+          puts '(M)'
         end
       end
     end

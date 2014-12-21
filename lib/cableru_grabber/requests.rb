@@ -3,7 +3,7 @@ module CableruGrabber::Requests
   def request(uri, anonymizer)
     @anonymizer = anonymizer
     source = begin
-               http_proxy @anonymizer.proxy, 80
+               http_proxy(@anonymizer.proxy, 80)
                self.get(uri, headers: { 'User-Agent' => useragent })
              rescue SocketError
                request_retrying uri
@@ -18,8 +18,8 @@ module CableruGrabber::Requests
                sleep(5)
                request_retrying uri
              end
-    if source.match(/id=\"map_europe\"/) && source.match(/id=\"map_ukraine\"/) && source.match(/id=\"map_east\"/) #Заблочили, пробуем еще раз...
-       puts 'ЗАПАЛИЛИ!!!'
+    if source.match(/id=\"map_europe\"/) && source.match(/id=\"map_ukraine\"/) && source.match(/id=\"map_east\"/)
+       print '!'
        request_retrying uri
     else
       source
@@ -27,8 +27,8 @@ module CableruGrabber::Requests
   end
 
   def request_retrying(uri)
-    puts 'retrying!'
-    request(uri, @anonymizer.proxy)
+    print '.'
+    request(uri, @anonymizer)
   end
 
   def useragent

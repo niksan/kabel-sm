@@ -14,7 +14,7 @@ class AnonymousAnonym
   end
 
   def proxy
-    @proxyes = self.class.fresh! if @proxyes.empty? 
+    @proxyes = self.class.proxyes if @proxyes.empty? 
     @proxyes.shift
   end
 
@@ -24,7 +24,7 @@ class AnonymousAnonym
   
   class << self
 
-    def fresh!
+    def proxyes
       from_hidemyass
     end
 
