@@ -47,7 +47,7 @@ class AnonymousAnonym
       Nokogiri::HTML(html_body).css('table#listable > tbody > tr').each do |tr|
         td_s = []
         tr.children.each do |tr_ch|
-          if tr_ch.name=='td'
+          if tr_ch.name == 'td'
             td_s << tr_ch
           end
         end
