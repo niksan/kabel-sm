@@ -2,8 +2,9 @@ class AnonymousAnonym
 
   SOURCES = {
     hidemyass: {
-      all: 'http://proxylist.hidemyass.com/search-1292985',
-      web: 'http://proxylist.hidemyass.com/search-1325704'
+      all: 'http://proxylist.hidemyass.com/search-1305291',
+      web: 'http://proxylist.hidemyass.com/search-1325704',
+      ru_ua: 'http://proxylist.hidemyass.com/search-1442047'
     },
     useragentstring: 'http://www.useragentstring.com/pages/All/'
   }
